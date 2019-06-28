@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
 </head>
+
 <body>
   <ul class="swatch">
     <select class="font-select">
@@ -19,41 +21,41 @@
     <li class="swatch-item" data-value="4">Open Sans</li>
     <li class="swatch-item" data-value="5">Jakis losowy font</li>
   </ul>
-<script src="https://code.jquery.com/jquery-2.2.0.min.js" ></script>
-<script>
-  var $j = jQuery.noConflict();
+  <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+  <script>
+    var $j = jQuery.noConflict();
 
 
-  //              Font Swatch
+    //              Font Swatch
 
-  var FontSwatch = function (swatch, select) {
-    this.swatch = swatch;
-    this.select = select;
-    this.bindEvents();
-  };
+    var FontSwatch = function (swatch, select) {
+      this.swatch = swatch;
+      this.select = select;
+      this.bindEvents();
+    };
+    FontSwatch.prototype.bindEvents = function () {
+      this.swatch.find('.swatch-item').on('click', this.handleSwatchClick);
+    };
 
-  FontSwatch.prototype.bindEvents = function () {
-    this.swatch.find('.swatch-item').on('click', this.handleSwatchClick);
-  };
+    FontSwatch.prototype.handleSwatchClick = function (e) {
+      var target = $j(e.currentTarget);
+      if (this.setSelectValue(target.data('value'))) {
+        this.select.trigger('change');
+        this.addSelectedClass(target);
+      }
+    };
 
-  FontSwatch.prototype.handleSwatchClick = function (e) {
-    var target = $j(e.currentTarget);
-    if (this.setSelectValue(target.data('value'))) {
-      this.select.trigger('change');
-      this.addSelectedClass(target);
-    }
-  };
+    FontSwatch.prototype.setSelectValue = function (value) {
+      return this.select.val(value).length === 1;
+    };
 
-  FontSwatch.prototype.setSelectValue = function (value) {
-    return this.select.val(value).length === 1;
-  };
+    FontSwatch.prototype.addSelectedClass = function (selectedItem) {
+      this.swatch.children().removeClass('selected');
+      selectedItem.addClass('selected');
+    };
 
-  FontSwatch.prototype.addSelectedClass = function (selectedItem) {
-    this.swatch.children().removeClass('selected');
-    selectedItem.addClass('selected');
-  };
-
-  fontSwatch = new FontSwatch($j('.swatch'), $j('.font-select'))
-</script>
+    fontSwatch = new FontSwatch($j('.swatch'), $j('.font-select'))
+  </script>
 </body>
+
 </html>
