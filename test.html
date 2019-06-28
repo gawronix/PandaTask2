@@ -33,15 +33,17 @@
       this.select = select;
       this.bindEvents();
     };
+
     FontSwatch.prototype.bindEvents = function () {
       this.swatch.find('.swatch-item').on('click', this.handleSwatchClick);
     };
 
     FontSwatch.prototype.handleSwatchClick = function (e) {
       var target = $j(e.currentTarget);
-      if (this.setSelectValue(target.data('value'))) {
-        this.select.trigger('change');
-        this.addSelectedClass(target);
+      // this wskazywał na "li" zamiast na tworzony obiekt :) całkiem sprytnie ukryty błąd
+      if (fontSwatch.setSelectValue(target.data('value'))) {
+        fontSwatch.select.trigger('change');
+        fontSwatch.addSelectedClass(target);
       }
     };
 
